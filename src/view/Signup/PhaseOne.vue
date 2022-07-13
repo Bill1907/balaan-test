@@ -3,7 +3,7 @@
     <div>
       <label for="signupEmail">
         <span>이메일</span>
-        <input id="signupEmail" type="text" v-model="email"/>
+        <input id="signupEmail" type="email" v-model="email"/>
       </label>
     </div>
     <div>
@@ -40,8 +40,6 @@ export default {
       type: Object,
       required: true,
     },
-  },
-  mounted() {
   },
 };
 </script>
