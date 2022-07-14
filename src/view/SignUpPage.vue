@@ -37,7 +37,10 @@ export default {
     setPhaseOneData(value) {
       this.phaseOneData = value;
     },
-    createErrorAlert({ parent, text }) {
+    setPhaseTwoData(value) {
+      this.phaseOneData = value;
+    },
+    createErrorAlert({ parent, message }) {
       const errorEl = parent.querySelector('.error-alert');
       const successEl = parent.querySelector('.success-alert');
       if (errorEl) {
@@ -48,10 +51,10 @@ export default {
       }
       const failElement = document.createElement('span');
       failElement.className = 'error-alert';
-      failElement.innerText = text;
+      failElement.innerText = message;
       parent.appendChild(failElement);
     },
-    createSuccessAlert({ parent, text }) {
+    createSuccessAlert({ parent, message }) {
       const errorEl = parent.querySelector('.error-alert');
       const successEl = parent.querySelector('.success-alert');
       if (errorEl) {
@@ -62,7 +65,7 @@ export default {
       }
       const successElement = document.createElement('span');
       successElement.className = 'success-alert';
-      successElement.innerText = text;
+      successElement.innerText = message;
       parent.appendChild(successElement);
     },
   },

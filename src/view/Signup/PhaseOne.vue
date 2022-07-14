@@ -74,12 +74,12 @@ export default {
       if (isValid) {
         this.$emit('createSuccessAlert', {
           parent: this.$refs.email,
-          text: '사용가능한 이메일입니다.',
+          message: '사용가능한 이메일입니다.',
         });
       } else {
         this.$emit('createErrorAlert', {
           parent: this.$refs.email,
-          text: '이메일 주소가 유효하지 않습니다.',
+          message: '이메일 주소가 유효하지 않습니다.',
         });
       }
     },
@@ -89,12 +89,12 @@ export default {
       if (isValid) {
         this.$emit('createSuccessAlert', {
           parent: this.$refs.password,
-          text: '사용가능한 비밀번호입니다.',
+          message: '사용가능한 비밀번호입니다.',
         });
       } else {
         this.$emit('createErrorAlert', {
           parent: this.$refs.password,
-          text: '비밀번호를 다시 입력해 주세요',
+          message: '비밀번호를 다시 입력해 주세요',
         });
       }
     },
@@ -104,12 +104,12 @@ export default {
       if (isValid) { // 성공일 경우 성공 알림
         this.$emit('createSuccessAlert', {
           parent: this.$refs.passwordCheck,
-          text: '비밀번호 확인되었습니다.',
+          message: '비밀번호 확인되었습니다.',
         });
       } else { // 실패일 경우 실패 알림
         this.$emit('createErrorAlert', {
           parent: this.$refs.passwordCheck,
-          text: '비밀번호를 확인해 주세요',
+          message: '비밀번호를 확인해 주세요',
         });
       }
     },
