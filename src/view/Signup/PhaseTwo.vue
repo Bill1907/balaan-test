@@ -74,7 +74,17 @@ export default {
     },
     handleFocusoutContact() {
       const isValid = this.validateContact(this.contact);
-      console.log(isValid);
+      if (isValid) {
+        this.$emit('createSuccessAlert', {
+          parent: this.$refs.contact,
+          message: 'good',
+        });
+      } else {
+        this.$emit('createErrorAlert', {
+          parent: this.$refs.contact,
+          message: '연락처를 다시 확인해 주세요.',
+        });
+      }
     },
     handlePreviousBtn() {
       this.$emit('setPhase', 1);
@@ -88,8 +98,14 @@ export default {
       return false;
     },
     validateContact(contact) {
-      console.log(contact);
+      const contactReg = /^[0-9]{2,3}[0-9]{3,4}[0-9]{4}/;
+      if (this.isStartZero(contact)) {
+        const filteredContact = this.filterContact(contact);
+        return contactReg.test(filteredContact);
+      }
+      return false;
     },
+    // 정규식 체크
     isExceptionExpression(value) {
       const specialReg = /[\{\}\[\]\/?.,;:|\)*~`!^\-_+<>@\#$%&\\\=\(\'\"]/g;
       const blankReg = /\s/g;
