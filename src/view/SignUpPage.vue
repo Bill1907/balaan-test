@@ -5,8 +5,17 @@
       :phaseOneData="phaseOneData? phaseOneData : {}"
       @setPhaseOneData="setPhaseOneData"
       @setPhase="setPhase"
+      @createErrorAlert="createErrorAlert"
+      @createSuccessAlert="createSuccessAlert"
     />
-    <PhaseTwo v-else-if="phase === 2" />
+    <PhaseTwo
+      v-else-if="phase === 2"
+      :phaseTwoData="phaseTwoData? phaseTwoData : {}"
+      @setPhase="setPhase"
+      @setPhaseTwoData="setPhaseTwoData"
+      @createErrorAlert="createErrorAlert"
+      @createSuccessAlert="createSuccessAlert"
+    />
     <PhaseThree v-else-if="phase === 3"/>
   </div>
 </template>
@@ -23,6 +32,7 @@ export default {
     return {
       phase: 1,
       phaseOneData: null,
+      phaseTwoData: null,
     };
   },
   methods: {
@@ -31,6 +41,37 @@ export default {
     },
     setPhaseOneData(value) {
       this.phaseOneData = value;
+    },
+    setPhaseTwoData(value) {
+      this.phaseOneData = value;
+    },
+    createErrorAlert({ parent, message }) {
+      const errorEl = parent.querySelector('.error-alert');
+      const successEl = parent.querySelector('.success-alert');
+      if (errorEl) {
+        errorEl.remove();
+      }
+      if (successEl) {
+        successEl.remove();
+      }
+      const failElement = document.createElement('span');
+      failElement.className = 'error-alert';
+      failElement.innerText = message;
+      parent.appendChild(failElement);
+    },
+    createSuccessAlert({ parent, message }) {
+      const errorEl = parent.querySelector('.error-alert');
+      const successEl = parent.querySelector('.success-alert');
+      if (errorEl) {
+        errorEl.remove();
+      }
+      if (successEl) {
+        successEl.remove();
+      }
+      const successElement = document.createElement('span');
+      successElement.className = 'success-alert';
+      successElement.innerText = message;
+      parent.appendChild(successElement);
     },
   },
 };
