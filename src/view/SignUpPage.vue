@@ -60,7 +60,6 @@ export default {
       parent.appendChild(failElement);
     },
     createSuccessAlert({ parent, message }) {
-      console.log({ parent, message });
       const errorEl = parent.querySelector('.error-alert');
       const successEl = parent.querySelector('.success-alert');
       if (errorEl) {

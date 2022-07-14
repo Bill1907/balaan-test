@@ -60,8 +60,6 @@ export default {
     // 이벤트 핸들러
     handleFocusoutName() {
       const isValid = this.validateName(this.name);
-      console.log(isValid);
-      console.log(this.$refs.name);
       if (isValid) {
         this.$emit('createSuccessAlert', {
           parent: this.$refs.name,
@@ -83,11 +81,6 @@ export default {
     },
     // 유효성 검사
     validateName(name) {
-      /**
-       * 1. 특수문자 필터링
-       * 2. 한글 필터링
-       * 3. 영어 필터링
-       */
       if (this.isExceptionExpression(name)) {
         return (this.isKorean(name) && name.length > 2)
           || (this.isEnglish(name) && name.length > 3);
@@ -110,6 +103,21 @@ export default {
     isEnglish(value) {
       const englishReg = /^[a-zA-Z]+$/;
       return englishReg.test(value);
+    },
+    isStartZero(value) {
+      return value[0] === '0';
+    },
+    // filter
+    filterContact(value) {
+      let result = '';
+      if (value.includes('-')) {
+        result = value.split('-').join('');
+      } else if (value.includes(' ')) {
+        result = value.split(' ').join('');
+      } else {
+        result = value;
+      }
+      return result;
     },
   },
 };
