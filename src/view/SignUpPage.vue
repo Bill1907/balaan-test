@@ -10,7 +10,11 @@
     />
     <PhaseTwo
       v-else-if="phase === 2"
+      :phaseTwoData="phaseTwoData? phaseTwoData : {}"
       @setPhase="setPhase"
+      @setPhaseTwoData="setPhaseTwoData"
+      @createErrorAlert="createErrorAlert"
+      @createSuccessAlert="createSuccessAlert"
     />
     <PhaseThree v-else-if="phase === 3"/>
   </div>
@@ -28,6 +32,7 @@ export default {
     return {
       phase: 1,
       phaseOneData: null,
+      phaseTwoData: null,
     };
   },
   methods: {
@@ -55,6 +60,7 @@ export default {
       parent.appendChild(failElement);
     },
     createSuccessAlert({ parent, message }) {
+      console.log({ parent, message });
       const errorEl = parent.querySelector('.error-alert');
       const successEl = parent.querySelector('.success-alert');
       if (errorEl) {
