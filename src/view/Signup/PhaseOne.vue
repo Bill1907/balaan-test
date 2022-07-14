@@ -58,7 +58,7 @@ export default {
       required: true,
     },
   },
-  emits: ['setPhaseOneData', 'setPhase'],
+  emits: ['setPhaseOneData', 'setPhase', 'createErrorAlert', 'createSuccessAlert'],
   mounted() {
     if (Object.keys(this.phaseOneData).length > 0) {
       this.email = this.phaseOneData.email;
@@ -72,27 +72,45 @@ export default {
       const isValid = this.validateEmail(this.email);
       this.isValidEmail = isValid;
       if (isValid) {
-        this.createSuccessAlert(this.$refs.email, '사용가능한 이메일입니다.');
+        this.$emit('createSuccessAlert', {
+          parent: this.$refs.email,
+          text: '사용가능한 이메일입니다.',
+        });
       } else {
-        this.createErrorAlert(this.$refs.email, '이메일 주소가 유효하지 않습니다.');
+        this.$emit('createErrorAlert', {
+          parent: this.$refs.email,
+          text: '이메일 주소가 유효하지 않습니다.',
+        });
       }
     },
     handlePasswordFocusout() {
       const isValid = this.validatePassword(this.password);
       this.isValidPassword = isValid;
       if (isValid) {
-        this.createSuccessAlert(this.$refs.password, '사용가능한 비밀번호입니다.');
+        this.$emit('createSuccessAlert', {
+          parent: this.$refs.password,
+          text: '사용가능한 비밀번호입니다.',
+        });
       } else {
-        this.createErrorAlert(this.$refs.password, '비밀번호를 다시 입력해 주세요');
+        this.$emit('createErrorAlert', {
+          parent: this.$refs.password,
+          text: '비밀번호를 다시 입력해 주세요',
+        });
       }
     },
     handlePasswordCheckFocusout() {
       const isValid = this.validatePasswordCheck(this.password, this.passwordCheck);
       this.isValidPasswordCheck = isValid;
       if (isValid) { // 성공일 경우 성공 알림
-        this.createSuccessAlert(this.$refs.passwordCheck, '');
+        this.$emit('createSuccessAlert', {
+          parent: this.$refs.passwordCheck,
+          text: '비밀번호 확인되었습니다.',
+        });
       } else { // 실패일 경우 실패 알림
-        this.createErrorAlert(this.$refs.passwordCheck, '비밀번호를 확인해 주세요');
+        this.$emit('createErrorAlert', {
+          parent: this.$refs.passwordCheck,
+          text: '비밀번호를 확인해 주세요',
+        });
       }
     },
     handleNextBtn() {
@@ -115,34 +133,6 @@ export default {
     },
     validatePasswordCheck(password1, password2) {
       return password1 === password2;
-    },
-    createErrorAlert(parent, text) {
-      const errorEl = parent.querySelector('.error-alert');
-      const successEl = parent.querySelector('.success-alert');
-      if (errorEl) {
-        errorEl.remove();
-      }
-      if (successEl) {
-        successEl.remove();
-      }
-      const failElement = document.createElement('span');
-      failElement.className = 'error-alert';
-      failElement.innerText = text;
-      parent.appendChild(failElement);
-    },
-    createSuccessAlert(parent, text) {
-      const errorEl = parent.querySelector('.error-alert');
-      const successEl = parent.querySelector('.success-alert');
-      if (errorEl) {
-        errorEl.remove();
-      }
-      if (successEl) {
-        successEl.remove();
-      }
-      const successElement = document.createElement('span');
-      successElement.className = 'success-alert';
-      successElement.innerText = text;
-      parent.appendChild(successElement);
     },
   },
 };

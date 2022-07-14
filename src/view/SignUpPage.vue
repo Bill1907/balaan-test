@@ -5,6 +5,8 @@
       :phaseOneData="phaseOneData? phaseOneData : {}"
       @setPhaseOneData="setPhaseOneData"
       @setPhase="setPhase"
+      @createErrorAlert="createErrorAlert"
+      @createSuccessAlert="createSuccessAlert"
     />
     <PhaseTwo
       v-else-if="phase === 2"
@@ -34,6 +36,34 @@ export default {
     },
     setPhaseOneData(value) {
       this.phaseOneData = value;
+    },
+    createErrorAlert({ parent, text }) {
+      const errorEl = parent.querySelector('.error-alert');
+      const successEl = parent.querySelector('.success-alert');
+      if (errorEl) {
+        errorEl.remove();
+      }
+      if (successEl) {
+        successEl.remove();
+      }
+      const failElement = document.createElement('span');
+      failElement.className = 'error-alert';
+      failElement.innerText = text;
+      parent.appendChild(failElement);
+    },
+    createSuccessAlert({ parent, text }) {
+      const errorEl = parent.querySelector('.error-alert');
+      const successEl = parent.querySelector('.success-alert');
+      if (errorEl) {
+        errorEl.remove();
+      }
+      if (successEl) {
+        successEl.remove();
+      }
+      const successElement = document.createElement('span');
+      successElement.className = 'success-alert';
+      successElement.innerText = text;
+      parent.appendChild(successElement);
     },
   },
 };
