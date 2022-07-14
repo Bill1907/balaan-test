@@ -35,7 +35,7 @@
     </div>
   </div>
   <div>
-    <button>다음</button>
+    <button @click="handleNextBtn">다음</button>
   </div>
 </template>
 
@@ -44,21 +44,33 @@ export default {
   name: 'PhaseOne',
   data() {
     return {
+      isValidEmail: false,
+      isValidPassword: false,
+      isValidPasswordCheck: false,
       email: '',
       password: '',
       passwordCheck: '',
     };
   },
-  // props readonly
   props: {
     phaseOneData: {
       type: Object,
       required: true,
     },
   },
+  emits: ['setPhaseOneData', 'setPhase'],
+  mounted() {
+    if (Object.keys(this.phaseOneData).length > 0) {
+      this.email = this.phaseOneData.email;
+      this.password = this.phaseOneData.password;
+      this.passwordCheck = this.phaseOneData.password;
+    }
+  },
   methods: {
+    // event handler
     handleEmailFocusout() {
       const isValid = this.validateEmail(this.email);
+      this.isValidEmail = isValid;
       if (isValid) {
         this.createSuccessAlert(this.$refs.email, '사용가능한 이메일입니다.');
       } else {
@@ -67,6 +79,7 @@ export default {
     },
     handlePasswordFocusout() {
       const isValid = this.validatePassword(this.password);
+      this.isValidPassword = isValid;
       if (isValid) {
         this.createSuccessAlert(this.$refs.password, '사용가능한 비밀번호입니다.');
       } else {
@@ -75,10 +88,20 @@ export default {
     },
     handlePasswordCheckFocusout() {
       const isValid = this.validatePasswordCheck(this.password, this.passwordCheck);
+      this.isValidPasswordCheck = isValid;
       if (isValid) { // 성공일 경우 성공 알림
         this.createSuccessAlert(this.$refs.passwordCheck, '');
       } else { // 실패일 경우 실패 알림
         this.createErrorAlert(this.$refs.passwordCheck, '비밀번호를 확인해 주세요');
+      }
+    },
+    handleNextBtn() {
+      if (this.isValidEmail && this.isValidPassword && this.isValidPasswordCheck) {
+        this.$emit('setPhaseOneData', {
+          email: this.email,
+          password: this.password,
+        });
+        this.$emit('setPhase', 2);
       }
     },
     // validation check
@@ -87,7 +110,7 @@ export default {
       return !!email.match(re);
     },
     validatePassword(password) {
-      const re = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*])(?=.{8,})/;
+      const re = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\\$%\\^&\\*])(?=.{8,})/;
       return !!password.match(re);
     },
     validatePasswordCheck(password1, password2) {

@@ -2,7 +2,9 @@
   <div class="signup-wrapper">
     <PhaseOne
       v-if="phase === 1"
-      :phaseOneData="phaseOneData"
+      :phaseOneData="phaseOneData? phaseOneData : {}"
+      @setPhaseOneData="setPhaseOneData"
+      @setPhase="setPhase"
     />
     <PhaseTwo v-else-if="phase === 2" />
     <PhaseThree v-else-if="phase === 3"/>
@@ -14,20 +16,22 @@ import PhaseOne from './Signup/PhaseOne.vue';
 import PhaseTwo from './Signup/PhaseTwo.vue';
 import PhaseThree from './Signup/PhaseThree.vue';
 
-const PHASE_ONE_DATA = {
-  email: '',
-  password: '',
-  passwordCheck: '',
-};
-
 export default {
   name: 'SignUpPage',
   components: { PhaseOne, PhaseTwo, PhaseThree },
   data() {
     return {
       phase: 1,
-      phaseOneData: PHASE_ONE_DATA,
+      phaseOneData: null,
     };
+  },
+  methods: {
+    setPhase(number) {
+      this.phase = number;
+    },
+    setPhaseOneData(value) {
+      this.phaseOneData = value;
+    },
   },
 };
 </script>
