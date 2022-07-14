@@ -17,7 +17,7 @@
     </div>
   </div>
   <div>
-    <button>이전</button>
+    <button @click="handlePreviousBtn">이전</button>
     <button>다음</button>
   </div>
 </template>
@@ -25,6 +25,12 @@
 <script>
 export default {
   name: 'PhaseTwo',
+  emits: ['setPhase'],
+  methods: {
+    handlePreviousBtn() {
+      this.$emit('setPhase', 1);
+    },
+  },
 };
 </script>
 

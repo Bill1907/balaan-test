@@ -6,7 +6,10 @@
       @setPhaseOneData="setPhaseOneData"
       @setPhase="setPhase"
     />
-    <PhaseTwo v-else-if="phase === 2" />
+    <PhaseTwo
+      v-else-if="phase === 2"
+      @setPhase="setPhase"
+    />
     <PhaseThree v-else-if="phase === 3"/>
   </div>
 </template>
