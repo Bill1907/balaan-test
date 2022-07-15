@@ -98,8 +98,13 @@ export default {
 
 <style>
 .signup-wrapper {
-  border: 1px solid black;
   display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 20px;
+  height: 50vh;
+  border: 1px solid black;
+  border-radius: 50px;
 }
 
 </style>
