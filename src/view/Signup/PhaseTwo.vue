@@ -23,12 +23,13 @@
       </label>
     </div>
     <PostcodeComponent
+      :postcodeInfo="postcodeInfo? postcodeInfo : {}"
       @setPostcodeInfo="setPostcodeInfo"
     />
   </div>
   <div>
     <button @click="handlePreviousBtn">이전</button>
-    <button>다음</button>
+    <button @click="handleNextBtn">다음</button>
   </div>
 </template>
 
@@ -58,16 +59,31 @@ export default {
     if (Object.keys(this.phaseTwoData).length > 0) {
       this.name = this.phaseTwoData.name;
       this.contact = this.phaseTwoData.contact;
+      this.postcodeInfo = { ...this.phaseTwoData.postcodeInfo };
     }
   },
   methods: {
+    // emit 함수
     setPostcodeInfo(value) {
       this.postcodeInfo = value;
     },
     // 이벤트 핸들러
+    handlePreviousBtn() {
+      this.$emit('setPhase', 1);
+    },
+    handleNextBtn() {
+      if (this.isValidContact && this.isValidName) {
+        this.$emit('setPhase', 3);
+        this.$emit('setPhaseTwoData', {
+          name: this.name,
+          contact: this.contact,
+          postcodeInfo: this.postcodeInfo,
+        });
+      }
+    },
     handleFocusoutName() {
-      const isValid = this.validateName(this.name);
-      if (isValid) {
+      this.isValidName = this.validateName(this.name);
+      if (this.isValidName) {
         this.$emit('createSuccessAlert', {
           parent: this.$refs.name,
           message: 'good',
@@ -80,8 +96,8 @@ export default {
       }
     },
     handleFocusoutContact() {
-      const isValid = this.validateContact(this.contact);
-      if (isValid) {
+      this.isValidContact = this.validateContact(this.contact);
+      if (this.isValidContact) {
         this.$emit('createSuccessAlert', {
           parent: this.$refs.contact,
           message: 'good',
@@ -92,9 +108,6 @@ export default {
           message: '연락처를 다시 확인해 주세요.',
         });
       }
-    },
-    handlePreviousBtn() {
-      this.$emit('setPhase', 1);
     },
     // 유효성 검사
     validateName(name) {

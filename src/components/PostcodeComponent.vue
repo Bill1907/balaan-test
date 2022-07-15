@@ -31,7 +31,21 @@ export default {
       extraAddress: '',
     };
   },
+  props: {
+    postcodeInfo: {
+      type: Object,
+      required: true,
+    },
+  },
   emits: ['setPostcodeInfo'],
+  mounted() {
+    if (Object.keys(this.postcodeInfo).length > 0) {
+      this.postcode = this.postcodeInfo.postcode;
+      this.address = this.postcodeInfo.address;
+      this.detailAddress = this.postcodeInfo.detailAddress;
+      this.extraAddress = this.postcodeInfo.extraAddress;
+    }
+  },
   methods: {
     execDaumPostcode() {
       new window.daum.Postcode({
