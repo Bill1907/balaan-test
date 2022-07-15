@@ -1,8 +1,8 @@
 <template>
   <div>
     <span>카드번호</span>
-    <div>
-      <label for="card1">
+    <div ref="card">
+      <label for="card1" ref="card1">
         <input
           :value="card1"
           id="card1"
@@ -11,7 +11,7 @@
           @input="validateCardUnitNum($event, 'card1')"
         >
       </label>
-      <label for="card2">
+      <label for="card2" ref="card2">
         <input
           :value="card2"
           id="card2"
@@ -20,7 +20,7 @@
           @input="validateCardUnitNum($event, 'card2')"
         >
       </label>
-      <label for="card3">
+      <label for="card3" ref="card3">
         <input
           :value="card3"
           id="card3"
@@ -29,7 +29,7 @@
           @input="validateCardUnitNum($event, 'card3')"
         >
       </label>
-      <label for="card4" @focusout="handleFocusoutCardNum">
+      <label for="card4" ref="card4" @focusout="handleFocusoutCardNum">
       <input
         :value="card4"
         id="card4"
@@ -40,7 +40,7 @@
       </label>
     </div>
     <div>
-      <button>완료</button>
+      <button @click="handleCompleteBtn">완료</button>
     </div>
   </div>
 </template>
@@ -50,26 +50,82 @@ export default {
   name: 'PhaseThree',
   data() {
     return {
+      isValidCard: false,
       card1: '',
       card2: '',
       card3: '',
       card4: '',
     };
   },
+  props: {
+    phaseThreeData: {
+      type: Object,
+      required: true,
+    },
+  },
+  emits: ['setPhase', 'setPhaseThreeData', 'createErrorAlert', 'createSuccessAlert'],
+  mounted() {
+    if (Object.keys(this.phaseThreeData).length > 0) {
+      this.card1 = this.phaseThreeData.card1;
+      this.card2 = this.phaseThreeData.card2;
+      this.card3 = this.phaseThreeData.card3;
+      this.card4 = this.phaseThreeData.card4;
+    }
+  },
   methods: {
+    handleCompleteBtn() {
+      if (this.isValidCard) {
+        this.$emit('setPhase', 4);
+        this.$emit('setPhaseThreeData', {
+          card1: this.card1,
+          card2: this.card2,
+          card3: this.card3,
+          card4: this.card4,
+        });
+      }
+    },
     handleFocusoutCardNum() {
-      this.validateCardNum();
+      this.isValidCard = this.validateCardNum();
+      if (this.isValidCard) {
+        this.$emit('createSuccessAlert', {
+          parent: this.$refs.card,
+          message: '유효한 카드 정보입니다.',
+        });
+      } else {
+        this.$emit('createErrorAlert', {
+          parent: this.$refs.card,
+          message: '카드 정보를 확인해주세요.',
+        });
+      }
     },
     validateCardNum() {
       const cardNum = this.card1 + this.card2 + this.card3 + this.card4;
-      console.log(cardNum);
+      const cardNumArr = cardNum.split('').reverse();
+      const sum = cardNumArr.reduce((acc, cur, idx) => {
+        if ((idx + 1) % 2 === 0) {
+          const tempNum = Number(cur) * 2;
+          if (tempNum >= 9) {
+            return Number(acc) + tempNum + Number(cur);
+          }
+          return Number(acc) + tempNum;
+        }
+        return Number(acc) + Number(cur);
+      }, 0);
+      return sum % 10 === 0;
     },
     validateCardUnitNum(event, card) {
       event.target.value = event.target.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');
       if (event.target.value.length === 4) {
         this[card] = event.target.value;
+        this.$emit('createSuccessAlert', {
+          parent: this.$refs[card],
+          message: '',
+        });
       } else {
-        console.log('not enough');
+        this.$emit('createErrorAlert', {
+          parent: this.$refs[card],
+          message: '입력값이 부족합니다.',
+        });
       }
     },
   },
