@@ -22,7 +22,9 @@
         />
       </label>
     </div>
-    <PostcodeComponent/>
+    <PostcodeComponent
+      @setPostcodeInfo="setPostcodeInfo"
+    />
   </div>
   <div>
     <button @click="handlePreviousBtn">이전</button>
@@ -42,6 +44,7 @@ export default {
       isValidContact: false,
       name: '',
       contact: '',
+      postcodeInfo: null,
     };
   },
   props: {
@@ -58,6 +61,9 @@ export default {
     }
   },
   methods: {
+    setPostcodeInfo(value) {
+      this.postcodeInfo = value;
+    },
     // 이벤트 핸들러
     handleFocusoutName() {
       const isValid = this.validateName(this.name);

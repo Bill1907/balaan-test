@@ -11,7 +11,7 @@
       <input type="text" v-model="address" id="address" placeholder="주소">
     </label>
     <br>
-    <label for="detailAddress">
+    <label for="detailAddress" @focusout="handleFocusoutPostcodeInput">
       <input type="text" v-model="detailAddress" id="detailAddress" placeholder="상세주소">
     </label>
     <label for="extraAddress">
@@ -31,6 +31,7 @@ export default {
       extraAddress: '',
     };
   },
+  emits: ['setPostcodeInfo'],
   methods: {
     execDaumPostcode() {
       new window.daum.Postcode({
@@ -62,6 +63,14 @@ export default {
           this.postcode = data.zonecode;
         },
       }).open();
+    },
+    handleFocusoutPostcodeInput() {
+      this.$emit('setPostcodeInfo', {
+        postcode: this.postcode,
+        address: this.address,
+        detailAddress: this.detailAddress,
+        extraAddress: this.extraAddress,
+      });
     },
   },
 };
