@@ -85,7 +85,7 @@ export default {
       }
     },
     handleFocusoutCardNum() {
-      this.isValidCard = this.validateCardNum();
+      this.isValidCard = this.validateCardNum(this.card1 + this.card2 + this.card3 + this.card4);
       if (this.isValidCard) {
         this.$emit('createSuccessAlert', {
           parent: this.$refs.card,
@@ -98,8 +98,7 @@ export default {
         });
       }
     },
-    validateCardNum() {
-      const cardNum = this.card1 + this.card2 + this.card3 + this.card4;
+    validateCardNum(cardNum) {
       const cardNumArr = cardNum.split('').reverse();
       const sum = cardNumArr.reduce((acc, cur, idx) => {
         if ((idx + 1) % 2 === 0) {
