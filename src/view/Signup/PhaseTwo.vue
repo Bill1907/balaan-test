@@ -22,9 +22,7 @@
         />
       </label>
     </div>
-    <div>
-      address
-    </div>
+    <PostcodeComponent/>
   </div>
   <div>
     <button @click="handlePreviousBtn">이전</button>
@@ -33,8 +31,11 @@
 </template>
 
 <script>
+import PostcodeComponent from '../../components/PostcodeComponent.vue';
+
 export default {
   name: 'PhaseTwo',
+  components: { PostcodeComponent },
   data() {
     return {
       isValidName: false,
@@ -107,7 +108,7 @@ export default {
     },
     // 정규식 체크
     isExceptionExpression(value) {
-      const specialReg = /[\{\}\[\]\/?.,;:|\)*~`!^\-_+<>@\#$%&\\\=\(\'\"]/g;
+      const specialReg = /[\\{\\}\\[\]\\/?.,;:|\\)*~`!^\-_+<>@\\#$%&\\\\=\\(\\'\\"]/g;
       const blankReg = /\s/g;
       const numberReg = /[0-9]/g;
       return !specialReg.test(value) && !blankReg.test(value) && !numberReg.test(value);
