@@ -16,7 +16,19 @@
       @createErrorAlert="createErrorAlert"
       @createSuccessAlert="createSuccessAlert"
     />
-    <PhaseThree v-else-if="phase === 3"/>
+    <PhaseThree
+      v-else-if="phase === 3"
+      :phaseThreeData="phaseTwoData? phaseTwoData : {}"
+      @setPhase="setPhase"
+      @setPhaseThreeData="setPhaseThreeData"
+      @createErrorAlert="createErrorAlert"
+      @createSuccessAlert="createSuccessAlert"
+    />
+    <PhaseFour
+      v-else-if="phase === 4"
+      :phaseOneData="phaseOneData"
+      :phaseTwoData="phaseTwoData"
+    />
   </div>
 </template>
 
@@ -24,15 +36,19 @@
 import PhaseOne from './Signup/PhaseOne.vue';
 import PhaseTwo from './Signup/PhaseTwo.vue';
 import PhaseThree from './Signup/PhaseThree.vue';
+import PhaseFour from './Signup/PhaseFour.vue';
 
 export default {
   name: 'SignUpPage',
-  components: { PhaseOne, PhaseTwo, PhaseThree },
+  components: {
+    PhaseOne, PhaseTwo, PhaseThree, PhaseFour,
+  },
   data() {
     return {
       phase: 1,
       phaseOneData: null,
       phaseTwoData: null,
+      phaseThreeData: null,
     };
   },
   methods: {
@@ -43,7 +59,10 @@ export default {
       this.phaseOneData = value;
     },
     setPhaseTwoData(value) {
-      this.phaseOneData = value;
+      this.phaseTwoData = value;
+    },
+    setPhaseThreeData(value) {
+      this.phaseThreeData = value;
     },
     createErrorAlert({ parent, message }) {
       const errorEl = parent.querySelector('.error-alert');
