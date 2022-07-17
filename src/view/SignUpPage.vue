@@ -106,5 +106,29 @@ export default {
   border: 1px solid black;
   border-radius: 50px;
 }
+.input-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-content: center;
+  justify-content: center;
+  gap: 0.5vh;
+}
+.input-wrapper label {
+  display: flex;
+  justify-content: space-between;
+}
 
+.btn-wrapper{
+  display: flex;
+  justify-content: space-between;
+}
+
+.error-alert {
+  font-size: 13px;
+  color: red;
+}
+.success-alert {
+  font-size: 13px;
+  color: rgba(0, 42, 255, 0.84);
+}
 </style>

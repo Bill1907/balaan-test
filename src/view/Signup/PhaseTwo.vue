@@ -1,6 +1,6 @@
 <template>
-  <div>
-    <div ref="name">
+  <div class="phase-one-input-wrapper">
+    <div class="input-wrapper" ref="name">
       <label for="signupName">
         <span>이름</span>
         <input
@@ -11,7 +11,7 @@
         />
       </label>
     </div>
-    <div ref="contact">
+    <div class="input-wrapper" ref="contact">
       <label for="signupContact">
         <span>연락처</span>
         <input
@@ -27,7 +27,7 @@
       @setPostcodeInfo="setPostcodeInfo"
     />
   </div>
-  <div>
+  <div class="btn-wrapper">
     <button @click="handlePreviousBtn">이전</button>
     <button @click="handleNextBtn">다음</button>
   </div>
@@ -72,7 +72,7 @@ export default {
       this.$emit('setPhase', 1);
     },
     handleNextBtn() {
-      if (this.isValidContact && this.isValidName) {
+      if (this.isValidContact && this.isValidName && this.postcodeInfo) {
         this.$emit('setPhase', 3);
         this.$emit('setPhaseTwoData', {
           name: this.name,

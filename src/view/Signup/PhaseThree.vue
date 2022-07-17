@@ -1,44 +1,53 @@
 <template>
-  <div>
+  <div class="phase-one-input-wrapper">
     <span>카드번호</span>
-    <div ref="card">
-      <label for="card1" ref="card1">
+    <div class="card-input-wrapper" ref="card">
+      <div class="input-wrapper" ref="card1">
+        <label for="card1">
+          <input
+            :value="card1"
+            id="card1"
+            type="text"
+            maxlength="4"
+            @input="validateCardUnitNum($event, 'card1')"
+          >
+        </label>
+      </div>
+      <div class="input-wrapper" ref="card2">
+        <label for="card2">
+          <input
+            :value="card2"
+            id="card2"
+            type="text"
+            maxlength="4"
+            @input="validateCardUnitNum($event, 'card2')"
+          >
+        </label>
+      </div>
+      <div class="input-wrapper" ref="card3">
+        <label for="card3" ref="card3">
+          <input
+            :value="card3"
+            id="card3"
+            type="text"
+            maxlength="4"
+            @input="validateCardUnitNum($event, 'card3')"
+          >
+        </label>
+      </div>
+      <div class="input-wrapper" ref="card4">
+        <label for="card4" ref="card4" @focusout="handleFocusoutCardNum">
         <input
-          :value="card1"
-          id="card1"
+          :value="card4"
+          id="card4"
           type="text"
           maxlength="4"
-          @input="validateCardUnitNum($event, 'card1')"
+          @input="validateCardUnitNum($event, 'card4')"
         >
-      </label>
-      <label for="card2" ref="card2">
-        <input
-          :value="card2"
-          id="card2"
-          type="text"
-          maxlength="4"
-          @input="validateCardUnitNum($event, 'card2')"
-        >
-      </label>
-      <label for="card3" ref="card3">
-        <input
-          :value="card3"
-          id="card3"
-          type="text"
-          maxlength="4"
-          @input="validateCardUnitNum($event, 'card3')"
-        >
-      </label>
-      <label for="card4" ref="card4" @focusout="handleFocusoutCardNum">
-      <input
-        :value="card4"
-        id="card4"
-        type="text"
-        maxlength="4"
-        @input="validateCardUnitNum($event, 'card4')"
-      >
-      </label>
+        </label>
+      </div>
     </div>
+    <div ref="validationAlert"/>
     <div>
       <button @click="handleCompleteBtn">완료</button>
     </div>
@@ -88,12 +97,12 @@ export default {
       this.isValidCard = this.validateCardNum(this.card1 + this.card2 + this.card3 + this.card4);
       if (this.isValidCard) {
         this.$emit('createSuccessAlert', {
-          parent: this.$refs.card,
+          parent: this.$refs.validationAlert,
           message: '유효한 카드 정보입니다.',
         });
       } else {
         this.$emit('createErrorAlert', {
-          parent: this.$refs.card,
+          parent: this.$refs.validationAlert,
           message: '카드 정보를 확인해주세요.',
         });
       }
@@ -133,5 +142,12 @@ export default {
 </script>
 
 <style >
+.card-input-wrapper {
+  display: flex;
+  gap: 1vw;
+}
 
+.card-input-wrapper input {
+  width: 4vw;
+}
 </style>
