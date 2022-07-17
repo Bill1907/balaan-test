@@ -1,9 +1,12 @@
 <template>
-  <div>
-    <div ref="email">
+  <div class="phase-one-input-wrapper">
+    <div class="input-wrapper" ref="email">
       <label for="signupEmail">
-        <span>이메일</span>
+        <span class="input-text">
+          이메일
+        </span>
         <input
+          class="phase-one-input"
           id="signupEmail"
           type="email"
           v-model="email"
@@ -11,7 +14,7 @@
         />
       </label>
     </div>
-    <div ref="password">
+    <div class="input-wrapper" ref="password">
       <label for="signupPassword">
         <span>비밀번호</span>
         <input
@@ -22,7 +25,7 @@
         />
       </label>
     </div>
-    <div ref="passwordCheck">
+    <div class="input-wrapper" ref="passwordCheck">
       <label for="signupPasswordCheck">
         <span>비밀번호 확인</span>
         <input
@@ -34,7 +37,8 @@
       </label>
     </div>
   </div>
-  <div>
+  <div class="btn-wrapper">
+    <div/>
     <button @click="handleNextBtn">다음</button>
   </div>
 </template>
@@ -138,6 +142,11 @@ export default {
 };
 </script>
 
-<styles>
-
-</styles>
+<style>
+.phase-one-input-wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 3vh;
+  margin: 20px 10px;
+}
+</style>

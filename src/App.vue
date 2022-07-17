@@ -14,5 +14,10 @@ export default {
 </script>
 
 <style>
-
+#app {
+  height: 100vh;
+  display: flex;
+  align-content: center;
+  justify-content: center;
+}
 </style>
