@@ -99,6 +99,7 @@ export default {
       }
     },
     validateCardNum(cardNum) {
+      if (cardNum.length !== 16) return false;
       const cardNumArr = cardNum.split('').reverse();
       const sum = cardNumArr.reduce((acc, cur, idx) => {
         if ((idx + 1) % 2 === 0) {
